@@ -7,9 +7,7 @@ if (NODE_ENV !== 'production') require('dotenv').load()
 app.use(require('morgan')('dev'))
 app.use(require('body-parser').json())
 
-app.get('/ping', (req, res, next) => {
-  res.send('PONG')
-})
+app.use('/api/users', require('./routes/users'))
 
 const listener = () => console.log(`Listening on port ${PORT}!`)
 app.listen(PORT, listener)
