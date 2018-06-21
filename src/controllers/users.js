@@ -1,14 +1,12 @@
 const model = require('../models/users')
 const auth = require('./auth')
-const resourceName = 'user'
 
 async function signup (req, res, next) {
   try {
     const response = await model.create(req.body)
-    const { password, ...user } = response
-    const token = auth.createToken(user.id)
+    const token = auth.createToken(response.id)
 
-    res.status(201).json({ [resourceName]: user, token })
+    res.status(201).json({ token })
   } catch (e) {
     next({ status: 400, error: `User could not be registered` })
   }
@@ -17,10 +15,9 @@ async function signup (req, res, next) {
 async function login (req, res, next) {
   try {
     const response = await model.login(req.body)
-    const { password, ...user } = response
-    const token = auth.createToken(user.id)
+    const token = auth.createToken(response.id)
 
-    res.json({ [resourceName]: user, token })
+    res.json({ token })
   } catch (e) {
     next({ status: 401, error: `Email or password is incorrect` })
   }
@@ -28,7 +25,7 @@ async function login (req, res, next) {
 
 async function isLoggedIn (req, res, next) {
   try {
-    auth.parseToken(req.token)
+    auth.parseToken(req.body.token)
     res.sendStatus(200)
   } catch (e) {
     next({ status: 401, error: `User is not authorized to access that route` })
