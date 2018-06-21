@@ -6,6 +6,7 @@ if (NODE_ENV !== 'production') require('dotenv').load()
 
 app.use(require('morgan')('dev'))
 app.use(require('body-parser').json())
+app.use(require('cors')())
 
 app.use('/api/users', require('./routes/users'))
 app.use('/api/lists', require('./routes/lists'))
