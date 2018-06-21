@@ -1,5 +1,5 @@
 const model = require('../models/users')
-const auth = require('./auth')
+const auth = require('../lib/auth')
 
 async function signup (req, res, next) {
   try {

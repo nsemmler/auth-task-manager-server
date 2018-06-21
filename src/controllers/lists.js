@@ -1,15 +1,19 @@
 const { plural } = require('pluralize')
 const model = require('../models/lists')
+const { parseToken } = require('../lib/auth')
 const resourceName = 'list'
 
 async function index (req, res, next) {
-  const response = await model.get()
+  const token = parseToken(req.headers.authorization)
+  const userId = token.sub.id
+
+  const response = await model.get(userId)
   res.json({ [ plural(resourceName) ]: response })
 }
 
 async function show (req, res, next) {
   const id = req.params.id
-  const response = await model.get(id)
+  const response = await model.find(id)
 
   res.json({ [resourceName]: response })
 }

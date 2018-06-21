@@ -9,7 +9,7 @@ async function index (req, res, next) {
 
 async function show (req, res, next) {
   const id = req.params.id
-  const response = await model.get(id)
+  const response = await model.find(id)
 
   res.json({ [resourceName]: response })
 }

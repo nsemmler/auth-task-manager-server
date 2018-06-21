@@ -1,7 +1,11 @@
 const db = require('../db')
 
-function get (id) {
-  return id ? db('lists').where({ id }).first() : db('lists')
+function get (userId) {
+  return db('lists').where({ user_id: userId })
+}
+
+function find (id) {
+  return db('lists').where({ id }).first()
 }
 
 function create (body) {
@@ -20,5 +24,5 @@ function destroy (id) {
 }
 
 module.exports = {
-  get, create, destroy
+  get, find, create, destroy
 }

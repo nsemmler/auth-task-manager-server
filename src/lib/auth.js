@@ -8,7 +8,8 @@ function createToken (id) {
   return sign(sub, SECRET_KEY, options)
 }
 
-function parseToken (token) {
+function parseToken (header) {
+  const token = header.split('Bearer ')[1]
   return verify(token, SECRET_KEY)
 }
 
