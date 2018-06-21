@@ -19,7 +19,10 @@ async function show (req, res, next) {
 }
 
 async function create (req, res, next) {
-  const response = await model.create(req.body)
+  const token = parseToken(req.headers.authorization)
+  const userId = token.sub.id
+
+  const response = await model.create({ ...req.body, user_id: userId })
 
   res.status(201).json({ [resourceName]: response })
 }
