@@ -1,6 +1,6 @@
 const { plural } = require('pluralize')
 const model = require('../models/tasks')
-const resourceName = 'list'
+const resourceName = 'task'
 
 async function index (req, res, next) {
   const response = await model.get()
