@@ -1,7 +1,20 @@
 const db = require('../db')
+const tasksModel = require('./tasks')
 
 function get (userId) {
-  return db('lists').where({ user_id: userId })
+  return db('lists')
+    .where({ user_id: userId })
+    .then(lists => {
+      const ids = lists.map(({ id }) => id)
+      return tasksModel.get()
+        .whereIn('list_id', ids)
+        .then(tasks => {
+          return lists.map(list => {
+            const filtered = tasks.filter(task => task.list_id === list.id)
+            return { ...list, tasks: filtered }
+          })
+        })
+    })
 }
 
 function find (id) {
