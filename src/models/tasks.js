@@ -16,7 +16,7 @@ function create (body) {
 }
 
 function patch (id, body) {
-  return get(id).then(response => {
+  return find(id).then(response => {
     return db('tasks')
       .update({
         ...response,
