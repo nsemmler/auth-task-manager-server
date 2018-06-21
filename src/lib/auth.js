@@ -13,4 +13,20 @@ function parseToken (header) {
   return verify(token, SECRET_KEY)
 }
 
-module.exports = { createToken, parseToken }
+function isLoggedIn (req, res, next) {
+  try {
+    parseToken(req.headers.authorization)
+    next()
+  } catch (e) {
+    next({
+      status: 401,
+      error: `Session has expired. Please login again.`
+    })
+  }
+}
+
+module.exports = {
+  createToken,
+  parseToken,
+  isLoggedIn
+}
