@@ -26,7 +26,7 @@ function isLoggedIn (req, res, next) {
   }
 }
 
-async function isAuthorizedToUpdateTask (req, res, next) {
+async function isAuthorized (req, res, next) {
   try {
     const authorization = req.headers.authorization
     if (!authorization) {
@@ -37,7 +37,7 @@ async function isAuthorizedToUpdateTask (req, res, next) {
     const token = parseToken(authorization)
     const userId = token.sub.id
 
-    const { listId } = req.params
+    const listId = req.params.listId || req.params.id
     const list = await db('lists').where({ id: listId }).first()
     if (list.user_id !== userId) {
       const message = `You are not authorized to update this list`
@@ -57,5 +57,5 @@ module.exports = {
   createToken,
   parseToken,
   isLoggedIn,
-  isAuthorizedToUpdateTask
+  isAuthorized
 }

@@ -27,6 +27,13 @@ async function create (req, res, next) {
   res.status(201).json({ [resourceName]: response })
 }
 
+async function destroy (req, res, next) {
+  const id = req.params.id
+  const response = await model.destroy(id)
+
+  res.json({ [resourceName]: response })
+}
+
 module.exports = {
-  index, show, create
+  index, show, create, destroy
 }
