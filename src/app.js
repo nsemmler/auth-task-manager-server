@@ -10,7 +10,7 @@ app.use(require('cors')())
 
 app.use('/api/users', require('./routes/users'))
 app.use('/api/lists', require('./routes/lists'))
-app.use('/api/tasks', require('./routes/tasks'))
+app.use('/api/lists/:listId/tasks', require('./routes/tasks'))
 
 app.use((req, res, next) => {
   const status = 404
