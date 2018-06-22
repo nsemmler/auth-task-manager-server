@@ -3,8 +3,8 @@ exports.up = knex => {
     const hasColumn = await knex.schema.hasColumn('list_id')
     if (hasColumn) await table.dropColumn('list_id')
 
-    table.integer('list_id')
-    table.foreign('list_id').references('lists.id').onDelete('CASCADE')
+    await table.integer('list_id')
+    await table.foreign('list_id').references('lists.id').onDelete('CASCADE')
   })
 }
 
