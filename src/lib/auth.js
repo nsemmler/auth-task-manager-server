@@ -37,12 +37,8 @@ async function isAuthorizedToUpdateTask (req, res, next) {
     const token = parseToken(authorization)
     const userId = token.sub.id
 
-    const taskId = req.params.id
-    const task = await db('tasks').where({ id: taskId }).first()
-    if (!task) return next({ status: 404, error: `Could not find task with ID of ${taskId}` })
-
-    const list = await db('lists').where({ id: task.list_id }).first()
-    console.log(task, userId)
+    const { listId } = req.params
+    const list = await db('lists').where({ id: listId }).first()
     if (list.user_id !== userId) {
       const message = `You are not authorized to update this list`
       return next({ status: 401, error: message })
