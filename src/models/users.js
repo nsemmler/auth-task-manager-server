@@ -11,7 +11,6 @@ async function create ({ password, ...body }) {
 }
 
 function login ({ email, password }) {
-  console.log('Logging in...')
   return db('users')
     .where({ email })
     .then(async ([ user ]) => {
