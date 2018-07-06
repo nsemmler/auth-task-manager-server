@@ -23,15 +23,6 @@ async function login (req, res, next) {
   }
 }
 
-async function isLoggedIn (req, res, next) {
-  try {
-    auth.parseToken(req.body.token)
-    res.sendStatus(200)
-  } catch (e) {
-    next({ status: 401, error: `User is not authorized to access that route` })
-  }
-}
-
 module.exports = {
-  signup, login, isLoggedIn
+  signup, login
 }
