@@ -1,4 +1,3 @@
-require('dotenv').load()
 const { expect } = require('chai')
 const { sign, verify } = require('jsonwebtoken')
 const {
