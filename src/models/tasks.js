@@ -20,7 +20,8 @@ function patch (id, body) {
     return db('tasks')
       .update({
         ...response,
-        ...body
+        ...body,
+        updated_at: new Date()
       })
       .where({ id })
       .returning('*')
