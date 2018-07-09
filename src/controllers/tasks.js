@@ -15,9 +15,15 @@ async function show (req, res, next) {
 }
 
 async function create (req, res, next) {
-  const response = await model.create(req.body)
-
-  res.status(201).json({ [resourceName]: response })
+  try {
+    const response = await model.create(req.body)
+    res.status(201).json({ [resourceName]: response })
+  } catch (e) {
+    next({
+      status: 400,
+      error: `Task could not be created`
+    })
+  }
 }
 
 async function patch (req, res, next) {
