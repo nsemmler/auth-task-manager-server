@@ -1,4 +1,3 @@
-const { plural } = require('pluralize')
 const model = require('../models/tasks')
 const resourceName = 'task'
 
