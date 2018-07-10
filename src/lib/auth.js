@@ -10,7 +10,7 @@ function createToken (id) {
 }
 
 function parseToken (header) {
-  const token = header.split('Bearer ')[1]
+  const token = header && header.split('Bearer ')[1]
   return verify(token, SECRET_KEY)
 }
 
@@ -31,7 +31,7 @@ async function isAuthorized (req, res, next) {
     const authorization = req.headers.authorization
     if (!authorization) {
       const message = `You are not authorized to access this route`
-      next({ status: 401, error: message })
+      return next({ status: 401, error: message })
     }
 
     const token = parseToken(authorization)

@@ -12,7 +12,7 @@
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "dev": "run-all \"npm run dev-server\" \"npm run lint-watch\"",
-    "test": "mocha --recursive",
+    "test": "NODE_ENV=testing mocha --recursive",
     "start": "node src/app.js"
   },
   "keywords": [],
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
     "dotenv": "^6.0.0",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",

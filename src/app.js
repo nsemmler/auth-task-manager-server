@@ -2,9 +2,11 @@ const express = require('express')
 const app = express()
 const { PORT = 5000, NODE_ENV = 'development' } = process.env
 
-if (NODE_ENV !== 'production') require('dotenv').load()
+if (NODE_ENV === 'development') {
+  require('dotenv').load()
+  app.use(require('morgan')('dev'))
+}
 
-app.use(require('morgan')('dev'))
 app.use(require('body-parser').json())
 app.use(require('cors')())
 
@@ -20,7 +22,7 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-  console.error(err)
+  if (NODE_ENV === 'development') console.error(err)
 
   const message = `Something went wrong.`
   const { status = 500, error = message } = err
@@ -28,5 +30,9 @@ app.use((err, req, res, next) => {
   res.status(status).json({ status, error })
 })
 
-const listener = () => console.log(`Listening on port ${PORT}!`)
-app.listen(PORT, listener)
+if (NODE_ENV !== 'testing') {
+  const listener = () => console.log(`Listening on port ${PORT}!`)
+  app.listen(PORT, listener)
+}
+
+module.exports = app
