@@ -5,7 +5,7 @@ const resourceName = 'list'
 
 async function index (req, res, next) {
   const token = parseToken(req.headers.authorization)
-  const userId = token.sub.id
+  const userId = token.sub.id // User ID parsed from token
 
   const response = await model.get(userId)
   res.json({ [ plural(resourceName) ]: response })
@@ -18,12 +18,9 @@ async function create (req, res, next) {
 
     const response = await model.create({ ...req.body, user_id: userId })
 
-    res.status(201).json({ [resourceName]: response })
+    res.status(201).json({ lists: response })
   } catch (e) {
-    next({
-      status: 400,
-      error: `List could not be created`
-    })
+    next({ status: 400, error: `List could not be created` })
   }
 }
 
