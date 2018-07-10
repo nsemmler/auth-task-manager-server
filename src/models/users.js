@@ -13,8 +13,8 @@ async function create ({ password, ...body }) {
 function login ({ email, password }) {
   return db('users')
     .where({ email })
-    .then(async ([ user ]) => {
-      if (!user) throw new Error()
+    .then(async ([ user ]) => { // async here because this is the function containing "await"
+      if (!user) throw new Error() // custom error messages can be made - throws to controller catch (e)
 
       const isValid = await promisify(bcrypt.compare)(password, user.password)
       if (!isValid) throw new Error()

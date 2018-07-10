@@ -1,7 +1,11 @@
+// lib folder - typically houses stuff that doesn't fit within the MVC framework
+// i.e. authorization stuff, configuration settings, etc.
+
 const { SECRET_KEY } = process.env // .env file
 const { sign, verify } = require('jsonwebtoken')
 const db = require('../db')
 
+// generates a token - on Client side insert into header for EVERY client request
 function createToken (id) {
   const sub = { sub: { id } }
   const options = { expiresIn: '10 days' }

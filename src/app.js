@@ -3,7 +3,7 @@ const app = express()
 const { PORT = 5000, NODE_ENV = 'development' } = process.env
 
 if (NODE_ENV === 'development') {
-  require('dotenv').load()
+  require('dotenv').load() // defines process.env variables in .env file
   app.use(require('morgan')('dev'))
 }
 
